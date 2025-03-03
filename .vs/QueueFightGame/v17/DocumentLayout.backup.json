@@ -3,12 +3,24 @@
   "WorkspaceRootPath": "C:\\Users\\Home\\source\\repos\\QueueFightGame\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{60DC6F58-EB6A-450B-872F-565ED7AAA74B}|QueueFightGame\\QueueFightGame.csproj|c:\\users\\home\\source\\repos\\queuefightgame\\queuefightgame\\weakfighter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{60DC6F58-EB6A-450B-872F-565ED7AAA74B}|QueueFightGame\\QueueFightGame.csproj|solutionrelative:queuefightgame\\weakfighter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{60DC6F58-EB6A-450B-872F-565ED7AAA74B}|QueueFightGame\\QueueFightGame.csproj|C:\\Users\\Home\\source\\repos\\QueueFightGame\\queuefightgame\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{60DC6F58-EB6A-450B-872F-565ED7AAA74B}|QueueFightGame\\QueueFightGame.csproj|solutionrelative:queuefightgame\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{60DC6F58-EB6A-450B-872F-565ED7AAA74B}|QueueFightGame\\QueueFightGame.csproj|c:\\users\\home\\source\\repos\\queuefightgame\\queuefightgame\\iunit.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{60DC6F58-EB6A-450B-872F-565ED7AAA74B}|QueueFightGame\\QueueFightGame.csproj|solutionrelative:queuefightgame\\iunit.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{60DC6F58-EB6A-450B-872F-565ED7AAA74B}|QueueFightGame\\QueueFightGame.csproj|c:\\users\\home\\source\\repos\\queuefightgame\\queuefightgame\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{60DC6F58-EB6A-450B-872F-565ED7AAA74B}|QueueFightGame\\QueueFightGame.csproj|solutionrelative:queuefightgame\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{60DC6F58-EB6A-450B-872F-565ED7AAA74B}|QueueFightGame\\QueueFightGame.csproj|c:\\users\\home\\source\\repos\\queuefightgame\\queuefightgame\\baseunit.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{60DC6F58-EB6A-450B-872F-565ED7AAA74B}|QueueFightGame\\QueueFightGame.csproj|solutionrelative:queuefightgame\\baseunit.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{60DC6F58-EB6A-450B-872F-565ED7AAA74B}|QueueFightGame\\QueueFightGame.csproj|c:\\users\\home\\source\\repos\\queuefightgame\\queuefightgame\\strongfighter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{60DC6F58-EB6A-450B-872F-565ED7AAA74B}|QueueFightGame\\QueueFightGame.csproj|solutionrelative:queuefightgame\\strongfighter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -23,12 +35,51 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "WeakFighter.cs",
+              "DocumentMoniker": "C:\\Users\\Home\\source\\repos\\QueueFightGame\\QueueFightGame\\WeakFighter.cs",
+              "RelativeDocumentMoniker": "QueueFightGame\\WeakFighter.cs",
+              "ToolTip": "C:\\Users\\Home\\source\\repos\\QueueFightGame\\QueueFightGame\\WeakFighter.cs",
+              "RelativeToolTip": "QueueFightGame\\WeakFighter.cs",
+              "ViewState": "AgIAAAEAAAAAAAAAAAAAAAgAAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-02T15:17:12.942Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "StrongFighter.cs",
+              "DocumentMoniker": "C:\\Users\\Home\\source\\repos\\QueueFightGame\\QueueFightGame\\StrongFighter.cs",
+              "RelativeDocumentMoniker": "QueueFightGame\\StrongFighter.cs",
+              "ToolTip": "C:\\Users\\Home\\source\\repos\\QueueFightGame\\QueueFightGame\\StrongFighter.cs",
+              "RelativeToolTip": "QueueFightGame\\StrongFighter.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-02T14:53:54.302Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "BaseUnit.cs",
+              "DocumentMoniker": "C:\\Users\\Home\\source\\repos\\QueueFightGame\\QueueFightGame\\BaseUnit.cs",
+              "RelativeDocumentMoniker": "QueueFightGame\\BaseUnit.cs",
+              "ToolTip": "C:\\Users\\Home\\source\\repos\\QueueFightGame\\QueueFightGame\\BaseUnit.cs",
+              "RelativeToolTip": "QueueFightGame\\BaseUnit.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-02T14:42:28.806Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "IUnit.cs",
               "DocumentMoniker": "C:\\Users\\Home\\source\\repos\\QueueFightGame\\QueueFightGame\\IUnit.cs",
               "RelativeDocumentMoniker": "QueueFightGame\\IUnit.cs",
               "ToolTip": "C:\\Users\\Home\\source\\repos\\QueueFightGame\\QueueFightGame\\IUnit.cs",
               "RelativeToolTip": "QueueFightGame\\IUnit.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-02T06:36:31.918Z",
               "EditorCaption": ""

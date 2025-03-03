@@ -43,9 +43,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseUnit.cs" />
     <Compile Include="IUnit.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StrongFighter.cs" />
+    <Compile Include="WeakFighter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

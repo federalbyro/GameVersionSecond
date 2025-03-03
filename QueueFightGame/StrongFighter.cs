@@ -6,13 +6,8 @@ using System.Threading.Tasks;
 
 namespace QueueFightGame
 {
-    internal interface IUnit
+    internal class StrongFighter : BaseUnit
     {
-        int Health { get; }
-        float Protection { get; }
-        float Damage { get; }
-
-        void Attack(IUnit target);
-
+        public StrongFighter() : base("StrongFighter", 150, 0.5f, 50) { }
     }
 }
