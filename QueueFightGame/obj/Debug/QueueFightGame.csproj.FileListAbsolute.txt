@@ -1,0 +1,7 @@
+C:\Users\Home\source\repos\QueueFightGame\QueueFightGame\bin\Debug\QueueFightGame.exe.config
+C:\Users\Home\source\repos\QueueFightGame\QueueFightGame\bin\Debug\QueueFightGame.exe
+C:\Users\Home\source\repos\QueueFightGame\QueueFightGame\bin\Debug\QueueFightGame.pdb
+C:\Users\Home\source\repos\QueueFightGame\QueueFightGame\obj\Debug\QueueFightGame.csproj.AssemblyReference.cache
+C:\Users\Home\source\repos\QueueFightGame\QueueFightGame\obj\Debug\QueueFightGame.csproj.CoreCompileInputs.cache
+C:\Users\Home\source\repos\QueueFightGame\QueueFightGame\obj\Debug\QueueFightGame.exe
+C:\Users\Home\source\repos\QueueFightGame\QueueFightGame\obj\Debug\QueueFightGame.pdb

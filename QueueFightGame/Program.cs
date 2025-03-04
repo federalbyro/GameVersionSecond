@@ -10,6 +10,14 @@ namespace QueueFightGame
     {
         static void Main(string[] args)
         {
+            WeakFighter weakFighter = new WeakFighter();
+            StrongFighter strongFighter = new StrongFighter();
+            Archer archer = new Archer();
+            Healer healer = new Healer();
+
+            weakFighter.Attack(strongFighter);
+            archer.DoSpecialAction(strongFighter);
+            healer.DoHeal(weakFighter);
         }
     }
 }

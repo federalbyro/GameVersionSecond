@@ -8,10 +8,10 @@ namespace QueueFightGame
 {
     internal abstract class BaseUnit : IUnit
     {
-        public string Name { get => throw new NotImplementedException(); private set => throw new NotImplementedException(); };
-        public int Health { get => throw new NotImplementedException(); private set => throw new NotImplementedException(); }
-        public float Protection { get => throw new NotImplementedException(); private set => throw new NotImplementedException(); }
-        public float Damage { get => throw new NotImplementedException(); private set => throw new NotImplementedException(); }
+        public string Name { get; private set; }
+        public int Health { get; private set; }
+        public float Protection { get; private set; }
+        public float Damage { get; private set; }
 
         public BaseUnit(string name, int health, float protection, float damage) 
         {
@@ -23,7 +23,7 @@ namespace QueueFightGame
 
         public void Attack(IUnit target)
         {
-            throw new NotImplementedException();
+            Console.WriteLine($"Attack to {target.Name}");
         }
     }
 }

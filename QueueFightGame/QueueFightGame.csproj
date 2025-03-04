@@ -43,7 +43,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Archer.cs" />
     <Compile Include="BaseUnit.cs" />
+    <Compile Include="Healer.cs" />
+    <Compile Include="ICanBeHealed.cs" />
+    <Compile Include="ISpecialAction.cs" />
+    <Compile Include="ISpecialActionHealer.cs" />
     <Compile Include="IUnit.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace QueueFightGame
 {
-    internal class WeakFighter : BaseUnit, ICanBeHealed
+    internal interface ISpecialAction
     {
-        public WeakFighter() : base("WeakFighter", 100, 0.8f, 25) { }
+        int Range { get; }
+        int Power { get; }
+
+        void DoSpecialAction(IUnit targer);
     }
 }

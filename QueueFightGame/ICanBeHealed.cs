@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace QueueFightGame
 {
-    internal class WeakFighter : BaseUnit, ICanBeHealed
+    internal interface ICanBeHealed
     {
-        public WeakFighter() : base("WeakFighter", 100, 0.8f, 25) { }
+        string Name { get; }
     }
 }
