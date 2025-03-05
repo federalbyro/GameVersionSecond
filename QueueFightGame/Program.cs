@@ -15,9 +15,9 @@ namespace QueueFightGame
             Archer archer = new Archer();
             Healer healer = new Healer();
 
-            weakFighter.Attack(strongFighter);
-            archer.DoSpecialAction(strongFighter);
-            healer.DoHeal(weakFighter);
+            strongFighter.Attack(weakFighter);
+            strongFighter.Attack(weakFighter);
+            strongFighter.Attack(weakFighter);
         }
     }
 }

@@ -8,6 +8,6 @@ namespace QueueFightGame
 {
     internal class WeakFighter : BaseUnit, ICanBeHealed
     {
-        public WeakFighter() : base("WeakFighter", 100, 0.8f, 25) { }
+        public WeakFighter() : base("WeakFighter", 100f, 0.8f, 25) { }
     }
 }

@@ -10,7 +10,7 @@ namespace QueueFightGame
     {
         public int Range { get; private set; }
         public int Power { get; private set; }
-        public Healer() : base ("Healer", 30, 0.9f, 5)
+        public Healer() : base ("Healer", 30f, 0.9f, 5)
         {
             Range = 3;
             Power = 5;

@@ -8,6 +8,6 @@ namespace QueueFightGame
 {
     internal class StrongFighter : BaseUnit
     {
-        public StrongFighter() : base("StrongFighter", 150, 0.5f, 50) { }
+        public StrongFighter() : base("StrongFighter", 150f, 0.5f, 50) { }
     }
 }

@@ -9,7 +9,7 @@ namespace QueueFightGame
     internal interface IUnit
     {
         string Name { get; }
-        int Health { get; }
+        float Health { get; set; }
         float Protection { get; }
         float Damage { get; }
 

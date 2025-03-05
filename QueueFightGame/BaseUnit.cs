@@ -9,11 +9,11 @@ namespace QueueFightGame
     internal abstract class BaseUnit : IUnit
     {
         public string Name { get; private set; }
-        public int Health { get; private set; }
+        public float Health { get; set; }
         public float Protection { get; private set; }
         public float Damage { get; private set; }
 
-        public BaseUnit(string name, int health, float protection, float damage) 
+        public BaseUnit(string name, float health, float protection, float damage) 
         {
             Name = name;
             Health = health;
@@ -24,6 +24,18 @@ namespace QueueFightGame
         public void Attack(IUnit target)
         {
             Console.WriteLine($"Attack to {target.Name}");
+
+            float newDamage = Damage * target.Protection;
+
+            target.Health -= newDamage;
+
+            Console.WriteLine($"Health {target.Health}");
+            Console.WriteLine($"Damage {newDamage}");
+
+            if (target.Health <= 0)
+            {
+                Console.WriteLine($"{target.Name} is dead");
+            }
         }
     }
 }
