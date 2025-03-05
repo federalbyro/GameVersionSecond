@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace QueueFightGame
 {
-    internal class StrongFighter : BaseUnit
+    internal class GameManager
     {
-        public StrongFighter() : base("StrongFighter", 150f, 0.5f, 50) { }
+        Team redTeam = new Team("Red");
+        Team blueTeam = new Team("Blue");
     }
 }
