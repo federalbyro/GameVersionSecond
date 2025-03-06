@@ -3,20 +3,28 @@
   "WorkspaceRootPath": "C:\\Users\\Home\\source\\repos\\QueueFightGame\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{60DC6F58-EB6A-450B-872F-565ED7AAA74B}|QueueFightGame\\QueueFightGame.csproj|c:\\users\\home\\source\\repos\\queuefightgame\\queuefightgame\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{60DC6F58-EB6A-450B-872F-565ED7AAA74B}|QueueFightGame\\QueueFightGame.csproj|solutionrelative:queuefightgame\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{60DC6F58-EB6A-450B-872F-565ED7AAA74B}|QueueFightGame\\QueueFightGame.csproj|c:\\users\\home\\source\\repos\\queuefightgame\\queuefightgame\\game.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{60DC6F58-EB6A-450B-872F-565ED7AAA74B}|QueueFightGame\\QueueFightGame.csproj|solutionrelative:queuefightgame\\game.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{60DC6F58-EB6A-450B-872F-565ED7AAA74B}|QueueFightGame\\QueueFightGame.csproj|c:\\users\\home\\source\\repos\\queuefightgame\\queuefightgame\\team.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{60DC6F58-EB6A-450B-872F-565ED7AAA74B}|QueueFightGame\\QueueFightGame.csproj|solutionrelative:queuefightgame\\team.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{60DC6F58-EB6A-450B-872F-565ED7AAA74B}|QueueFightGame\\QueueFightGame.csproj|C:\\Users\\Home\\source\\repos\\QueueFightGame\\queuefightgame\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{60DC6F58-EB6A-450B-872F-565ED7AAA74B}|QueueFightGame\\QueueFightGame.csproj|solutionrelative:queuefightgame\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{60DC6F58-EB6A-450B-872F-565ED7AAA74B}|QueueFightGame\\QueueFightGame.csproj|C:\\Users\\Home\\source\\repos\\QueueFightGame\\queuefightgame\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{60DC6F58-EB6A-450B-872F-565ED7AAA74B}|QueueFightGame\\QueueFightGame.csproj|solutionrelative:queuefightgame\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{60DC6F58-EB6A-450B-872F-565ED7AAA74B}|QueueFightGame\\QueueFightGame.csproj|C:\\Users\\Home\\source\\repos\\QueueFightGame\\queuefightgame\\team.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{60DC6F58-EB6A-450B-872F-565ED7AAA74B}|QueueFightGame\\QueueFightGame.csproj|solutionrelative:queuefightgame\\team.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{60DC6F58-EB6A-450B-872F-565ED7AAA74B}|QueueFightGame\\QueueFightGame.csproj|c:\\users\\home\\source\\repos\\queuefightgame\\queuefightgame\\fighters.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{60DC6F58-EB6A-450B-872F-565ED7AAA74B}|QueueFightGame\\QueueFightGame.csproj|solutionrelative:queuefightgame\\fighters.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{60DC6F58-EB6A-450B-872F-565ED7AAA74B}|QueueFightGame\\QueueFightGame.csproj|C:\\Users\\Home\\source\\repos\\QueueFightGame\\queuefightgame\\ispecialaction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{60DC6F58-EB6A-450B-872F-565ED7AAA74B}|QueueFightGame\\QueueFightGame.csproj|solutionrelative:queuefightgame\\ispecialaction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{60DC6F58-EB6A-450B-872F-565ED7AAA74B}|QueueFightGame\\QueueFightGame.csproj|C:\\Users\\Home\\source\\repos\\QueueFightGame\\queuefightgame\\baseunit.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -27,15 +35,11 @@
       "RelativeMoniker": "D:0:0:{60DC6F58-EB6A-450B-872F-565ED7AAA74B}|QueueFightGame\\QueueFightGame.csproj|solutionrelative:queuefightgame\\iunit.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{60DC6F58-EB6A-450B-872F-565ED7AAA74B}|QueueFightGame\\QueueFightGame.csproj|C:\\Users\\Home\\source\\repos\\QueueFightGame\\queuefightgame\\ispecialaction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{60DC6F58-EB6A-450B-872F-565ED7AAA74B}|QueueFightGame\\QueueFightGame.csproj|solutionrelative:queuefightgame\\ispecialaction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{60DC6F58-EB6A-450B-872F-565ED7AAA74B}|QueueFightGame\\QueueFightGame.csproj|C:\\Users\\Home\\source\\repos\\QueueFightGame\\queuefightgame\\icanbehealed.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{60DC6F58-EB6A-450B-872F-565ED7AAA74B}|QueueFightGame\\QueueFightGame.csproj|solutionrelative:queuefightgame\\icanbehealed.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{60DC6F58-EB6A-450B-872F-565ED7AAA74B}|QueueFightGame\\QueueFightGame.csproj|c:\\users\\home\\source\\repos\\queuefightgame\\queuefightgame\\ispecialactionhealer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{60DC6F58-EB6A-450B-872F-565ED7AAA74B}|QueueFightGame\\QueueFightGame.csproj|C:\\Users\\Home\\source\\repos\\QueueFightGame\\queuefightgame\\ispecialactionhealer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{60DC6F58-EB6A-450B-872F-565ED7AAA74B}|QueueFightGame\\QueueFightGame.csproj|solutionrelative:queuefightgame\\ispecialactionhealer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -46,11 +50,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 284,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 8,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "ISpecialActionHealer.cs",
               "DocumentMoniker": "C:\\Users\\Home\\source\\repos\\QueueFightGame\\QueueFightGame\\ISpecialActionHealer.cs",
               "RelativeDocumentMoniker": "QueueFightGame\\ISpecialActionHealer.cs",
@@ -58,12 +62,11 @@
               "RelativeToolTip": "QueueFightGame\\ISpecialActionHealer.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-03T10:24:02.829Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-03T10:24:02.829Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "ICanBeHealed.cs",
               "DocumentMoniker": "C:\\Users\\Home\\source\\repos\\QueueFightGame\\QueueFightGame\\ICanBeHealed.cs",
               "RelativeDocumentMoniker": "QueueFightGame\\ICanBeHealed.cs",
@@ -71,12 +74,11 @@
               "RelativeToolTip": "QueueFightGame\\ICanBeHealed.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-03T10:31:05.157Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-03T10:31:05.157Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 5,
               "Title": "ISpecialAction.cs",
               "DocumentMoniker": "C:\\Users\\Home\\source\\repos\\QueueFightGame\\QueueFightGame\\ISpecialAction.cs",
               "RelativeDocumentMoniker": "QueueFightGame\\ISpecialAction.cs",
@@ -89,7 +91,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 7,
               "Title": "IUnit.cs",
               "DocumentMoniker": "C:\\Users\\Home\\source\\repos\\QueueFightGame\\QueueFightGame\\IUnit.cs",
               "RelativeDocumentMoniker": "QueueFightGame\\IUnit.cs",
@@ -97,12 +99,11 @@
               "RelativeToolTip": "QueueFightGame\\IUnit.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-02T06:36:31.918Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-02T06:36:31.918Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
               "Title": "BaseUnit.cs",
               "DocumentMoniker": "C:\\Users\\Home\\source\\repos\\QueueFightGame\\QueueFightGame\\BaseUnit.cs",
               "RelativeDocumentMoniker": "QueueFightGame\\BaseUnit.cs",
@@ -115,7 +116,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "Fighters.cs",
               "DocumentMoniker": "C:\\Users\\Home\\source\\repos\\QueueFightGame\\QueueFightGame\\Fighters.cs",
               "RelativeDocumentMoniker": "QueueFightGame\\Fighters.cs",
@@ -128,20 +129,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "Team.cs",
               "DocumentMoniker": "C:\\Users\\Home\\source\\repos\\QueueFightGame\\QueueFightGame\\Team.cs",
               "RelativeDocumentMoniker": "QueueFightGame\\Team.cs",
               "ToolTip": "C:\\Users\\Home\\source\\repos\\QueueFightGame\\QueueFightGame\\Team.cs",
               "RelativeToolTip": "QueueFightGame\\Team.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAwwBEAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-05T17:28:24.15Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "GameManager.cs",
               "DocumentMoniker": "C:\\Users\\Home\\source\\repos\\QueueFightGame\\QueueFightGame\\GameManager.cs",
               "RelativeDocumentMoniker": "QueueFightGame\\GameManager.cs",
@@ -150,6 +151,19 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-05T18:04:01.388Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Game.cs",
+              "DocumentMoniker": "C:\\Users\\Home\\source\\repos\\QueueFightGame\\QueueFightGame\\Game.cs",
+              "RelativeDocumentMoniker": "QueueFightGame\\Game.cs",
+              "ToolTip": "C:\\Users\\Home\\source\\repos\\QueueFightGame\\QueueFightGame\\Game.cs",
+              "RelativeToolTip": "QueueFightGame\\Game.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABQAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-06T06:16:47.925Z",
               "EditorCaption": ""
             },
             {
