@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 
 namespace QueueFightGame
 {
-    internal interface ISpecialAction
+    internal class SaveGame
     {
-        int Range { get; }
-        int Power { get; }
 
-        void DoSpecialAction(IUnit targer);
+    }
+
+    internal class LoadGame
+    {
+
     }
 }
