@@ -8,7 +8,30 @@ namespace QueueFightGame
 {
     internal class GameManager
     {
-        Team redTeam = new Team("Red");
-        Team blueTeam = new Team("Blue");
+
+        private Team redTeam;
+        private Team blueTeam;
+
+        public GameManager()
+        {
+            redTeam = new Team("Red");
+            blueTeam = new Team("Blue");
+
+            CreatFighters();
+        }
+
+        public void CreatFighters()
+        {
+            WeakFighter weakFighter1 = new WeakFighter();
+            WeakFighter weakFighter2 = new WeakFighter();
+
+            redTeam.AddFighter(weakFighter1);
+            blueTeam.AddFighter(weakFighter2);
+        }
+
+        public void Fight()
+        {
+
+        }
     }
 }

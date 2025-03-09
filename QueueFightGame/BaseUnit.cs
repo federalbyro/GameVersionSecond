@@ -12,6 +12,7 @@ namespace QueueFightGame
         public float Health { get; set; }
         public float Protection { get; private set; }
         public float Damage { get; private set; }
+        public Team Team { get; set; }
 
         public BaseUnit(string name, float health, float protection, float damage) 
         {
@@ -19,6 +20,7 @@ namespace QueueFightGame
             Health = health;
             Protection = protection;
             Damage = damage;
+            Team = null;
         }
 
         public void Attack(IUnit target)
@@ -28,14 +30,6 @@ namespace QueueFightGame
             float newDamage = Damage * target.Protection;
 
             target.Health -= newDamage;
-
-            Console.WriteLine($"Health {target.Health}");
-            Console.WriteLine($"Damage {newDamage}");
-
-            if (target.Health <= 0)
-            {
-                Console.WriteLine($"{target.Name} is dead");
-            }
         }
     }
 }

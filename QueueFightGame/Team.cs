@@ -19,12 +19,14 @@ namespace QueueFightGame
 
         public void AddFighter(IUnit fighter)
         {
-
+            fighter.Team = this;
+            QueueFighters.Enqueue(fighter);
+            Console.WriteLine($"Add {fighter.Name} to {this.TeamName}");
         }
 
         public IUnit ReplaceFighter()
         {
-
+            throw new NotImplementedException();
         }
 
         public bool IsDefeated()

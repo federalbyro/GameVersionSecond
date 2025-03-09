@@ -12,6 +12,7 @@ namespace QueueFightGame
         float Health { get; set; }
         float Protection { get; }
         float Damage { get; }
+        Team Team { get; set; }
 
         void Attack(IUnit target);
     }
