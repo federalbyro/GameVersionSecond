@@ -8,28 +8,28 @@ namespace QueueFightGame
 {
     internal class Team
     {
-        public Queue<IUnit> Fighters { get; private set; }
+        public Queue<IUnit> QueueFighters { get; private set; }
         public string TeamName { get; private set; }
 
         public Team(string teamName)
         {
             TeamName = teamName;
-            Fighters = new Queue<IUnit>();
+            QueueFighters = new Queue<IUnit>();
         }
 
         public void AddFighter(IUnit fighter)
         {
-            throw new NotImplementedException("Метод AddFighter() еще не реализован.");
+
         }
 
-        public IUnit GetNextFighter()
+        public IUnit ReplaceFighter()
         {
-            throw new NotImplementedException("Метод GetNextFighter() еще не реализован.");
+
         }
 
         public bool IsDefeated()
         {
-            throw new NotImplementedException("Метод IsDefeated() еще не реализован.");
+            return QueueFighters.Count == 0;
         }
     }
 }

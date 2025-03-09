@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace QueueFightGame
 {
+    //В этом классе можно реализовать Синглтон, может быть только один Manager
     internal class Game
     {
         private GameManager Manager;
