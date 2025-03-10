@@ -24,14 +24,29 @@ namespace QueueFightGame
             Console.WriteLine($"Add {fighter.Name} to {this.TeamName}");
         }
 
-        public IUnit ReplaceFighter()
+        public bool HasFighters()
         {
-            throw new NotImplementedException();
+            return QueueFighters.Count > 0;
         }
 
-        public bool IsDefeated()
+        public IUnit GetCurrentFighter()
         {
-            return QueueFighters.Count == 0;
+            if (QueueFighters.Count == 0)
+            {
+                Console.WriteLine($"Команда {TeamName} больше не имеет бойцов!");
+                return null;
+            }
+            return QueueFighters.Peek();
         }
+
+        public void RemoveFighter()
+        {
+            if (QueueFighters.Count > 0)
+            {
+                IUnit removedFighter = QueueFighters.Dequeue();
+                Console.WriteLine($"{removedFighter.Name} покинул команду {TeamName}.");
+            }
+        }
+
     }
 }
