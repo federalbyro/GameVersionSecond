@@ -41,7 +41,6 @@ namespace QueueFightGame
 
         public WallAdapter(BaseWall wall) : base(wall.Name, wall.Health, wall.Protection, 0, 30)
         {
-            this.wall = wall;
             Team = null;
         }
         public override void Attack(IUnit target)
