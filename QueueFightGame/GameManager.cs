@@ -14,54 +14,108 @@ namespace QueueFightGame
 
         public GameManager()
         {
-            redTeam = new Team("Red");
-            blueTeam = new Team("Blue");
+            redTeam = new Team("Red", 200);
+            blueTeam = new Team("Blue", 200);
 
             CreatFighters();
-            Fight();
+            Battle();
         }
 
         public void CreatFighters()
         {
-            WeakFighter weakFighter1 = new WeakFighter();
-            WeakFighter weakFighter2 = new WeakFighter();
-            WeakFighter weakFighter3 = new WeakFighter();
-            WeakFighter weakFighter4 = new WeakFighter();
+            BaseUnit weakFighter1 = new WeakFighter();
+            BaseUnit weakFighter2 = new WeakFighter();
+            BaseUnit strongFighter1 = new StrongFighter();
+            BaseUnit strongFighter2 = new StrongFighter();
+            BaseUnit archer1 = new Archer("Red_Archer");
+            BaseUnit archer2 = new Archer("Blue_Archer");
+            BaseUnit archer3 = new Archer("Blue_Archer");
+            BaseUnit archer4 = new Archer("Red_Archer");
+            BaseUnit healer1 = new Healer("Red_Healer");
+            BaseUnit healer2 = new Healer("Blue_Healer");
+            BaseWall wall = new StoneWall();
+            WallAdapter wallAdapter1 = new WallAdapter(wall);
+            WallAdapter wallAdapter2 = new WallAdapter(wall);
 
+            redTeam.AddFighter(wallAdapter1);
+            redTeam.AddFighter(archer4);
+            redTeam.AddFighter(archer1);
+            redTeam.AddFighter(strongFighter2);
             redTeam.AddFighter(weakFighter1);
-            redTeam.AddFighter(weakFighter2);
+            redTeam.AddFighter (healer1);
 
-            blueTeam.AddFighter(weakFighter3);
-            blueTeam.AddFighter(weakFighter4);
+            Console.WriteLine($"Money RedTeam {redTeam.Money}");
+
+            Console.WriteLine("---");
+
+            blueTeam.AddFighter(wallAdapter2);
+            blueTeam.AddFighter(archer3);
+            blueTeam.AddFighter(weakFighter2);
+            blueTeam.AddFighter(strongFighter1);
+            blueTeam.AddFighter(archer2);
+            blueTeam.AddFighter(healer2);
+
+            
+            Console.WriteLine($"Money BlueTeam {blueTeam.Money}");
         }
 
-        public void Fight()
+        private Team RandomStartAttack()
         {
+            Random randomStartAttack = new Random();
+            bool redTeamStarts = randomStartAttack.Next(2) == 0;
+            if (redTeamStarts)
+            {
+                return redTeam;
+            }
+            return blueTeam;
+        }
+
+        public void Battle()
+        {
+            Team attackingTeam = RandomStartAttack();
+            Team defendingTeam = (attackingTeam == redTeam) ? blueTeam : redTeam;
+
             while (redTeam.HasFighters() && blueTeam.HasFighters())
             {
-                IUnit redFighter = redTeam.GetCurrentFighter();
-                IUnit blueFighter = blueTeam.GetCurrentFighter();
+                Console.WriteLine("Нажмите любую клавишу, чтобы продолжить...");
+                Console.ReadKey();
 
-                Console.WriteLine($"\n{redFighter.Name} (Health: {redFighter.Health}) vs {blueFighter.Name} (Health: {blueFighter.Health})");
+                redTeam.ShowTeam();
+                blueTeam.ShowTeam();
 
-                redFighter.Attack(blueFighter);
-                if (blueFighter.Health <= 0)
+                Console.WriteLine("\n--- Новый раунд ---");
+                Console.WriteLine($"Ходит команда: {(attackingTeam == redTeam ? "Красная" : "Синяя")}");
+
+                IUnit attacker = attackingTeam.GetNextFighter();
+                IUnit defender = defendingTeam.GetNextFighter();
+
+                Console.WriteLine($"\n{attacker.Name} | HP: {attacker.Health} атакует {defender.Name}| HP: {defender.Health}");
+                attacker.Attack(defender);
+
+                foreach (IUnit unit in attackingTeam.QueueFighters.Skip(1))
                 {
-                    Console.WriteLine($"{blueFighter.Name} погиб!");
-                    blueTeam.RemoveFighter();
+                    if (unit is Archer archer)
+                    {
+                        archer.DoSpecialAttack(defender, attacker.Team);
+                    }
+                    if (unit is Healer healer)
+                    {
+                        healer.DoHeal(attacker.Team);
+                    }
                 }
 
-                if (!blueTeam.HasFighters()) break;
-
-                blueFighter = blueTeam.GetCurrentFighter();
-                blueFighter.Attack(redFighter);
-                if (redFighter.Health <= 0)
+                if (defender.Health <= 0)
                 {
-                    Console.WriteLine($"{redFighter.Name} погиб!");
-                    redTeam.RemoveFighter();
+                    Console.WriteLine($"{defender.Name} пал в бою!");
+                    defendingTeam.RemoveFighter();
                 }
+
+                (attackingTeam, defendingTeam) = (defendingTeam, attackingTeam);
             }
+
+            Console.WriteLine(redTeam.HasFighters() ? "Красная команда победила!" : "Синяя команда победила!");
         }
+
 
 
     }

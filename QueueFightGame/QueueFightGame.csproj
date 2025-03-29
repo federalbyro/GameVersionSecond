@@ -46,9 +46,8 @@
     <Compile Include="BaseUnit.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="GameManager.cs" />
-    <Compile Include="ICanBeHealed.cs" />
-    <Compile Include="ISpecialActionArcher.cs" />
-    <Compile Include="ISpecialActionHealer.cs" />
+    <Compile Include="ICanBe.cs" />
+    <Compile Include="ISpecialAction.cs" />
     <Compile Include="IUnit.cs" />
     <Compile Include="LoadSaveGame.cs" />
     <Compile Include="Program.cs" />

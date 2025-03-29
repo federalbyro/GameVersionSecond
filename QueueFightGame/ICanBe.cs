@@ -9,5 +9,11 @@ namespace QueueFightGame
     internal interface ICanBeHealed
     {
         string Name { get; }
+        float Health { get; set; }
+    }
+    internal interface ICanBeCloned
+    {
+        //string Name { get; }
+        //float Health { get; set; }
     }
 }

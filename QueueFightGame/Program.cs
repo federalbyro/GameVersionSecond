@@ -10,7 +10,7 @@ namespace QueueFightGame
     {
         static void Main(string[] args)
         {
-            GameManager manager = new GameManager();
+            Game game = new Game();
         }
     }
 
