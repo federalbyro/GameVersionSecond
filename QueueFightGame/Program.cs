@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace QueueFightGame
 {
-    internal class Program
+    public class Program
     {
         static void Main(string[] args)
         {

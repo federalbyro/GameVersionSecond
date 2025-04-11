@@ -1,47 +1,66 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace QueueFightGame
 {
-    internal class WeakFighter : BaseUnit, ICanBeHealed
+    public class WeakFighter : BaseUnit, ICanBeHealed, ICanBeCloned
     {
         public WeakFighter() : base("WeakFighter", 100f, 0.7f, 40, 15) { }
+        public WeakFighter(WeakFighter prototype) : base(prototype.Name + "_clone",
+            prototype.Health, prototype.Protection, prototype.Damage, prototype.Cost)
+        { }
+
+        public ICanBeCloned Clone()
+        {
+            return new WeakFighter(this);
+        }
     }
 
-    internal class StrongFighter : BaseUnit
+    public class StrongFighter : BaseUnit
     {
         public StrongFighter() : base("StrongFighter", 100f, 0.5f, 60, 30) { }
     }
 
-    internal class Healer : BaseUnit, ISpecialActionHealer
+    public class Healer : BaseUnit, ISpecialActionHealer, ICanBeCloned
     {
         public int Range { get; private set; }
         public int Power { get; private set; }
+
         public Healer(string name) : base(name, 100f, 1f, 5, 10)
         {
             Range = 3;
             Power = 15;
         }
 
+        public Healer(Healer prototype) : base(prototype.Name + "_clone",
+            prototype.Health, prototype.Protection, prototype.Damage, prototype.Cost)
+        {
+            Range = prototype.Range;
+            Power = prototype.Power;
+        }
+
+        public ICanBeCloned Clone()
+        {
+            return new Healer(this);
+        }
+
         public void DoHeal(Team ownTeam)
         {
-            int healerIndex = ownTeam.QueueFighters.ToList().FindIndex(unit => unit == this);
+            if (ownTeam == null) throw new ArgumentNullException(nameof(ownTeam));
 
-            ICanBeHealed target = (ICanBeHealed)ownTeam.QueueFighters.ToList()
+            var fighters = ownTeam.Fighters;
+            int healerIndex = fighters.FindIndex(unit => unit == this);
+
+            ICanBeHealed target = (ICanBeHealed)fighters
                 .Where(unit => unit is ICanBeHealed && unit.Health < 100)
-                .FirstOrDefault(unit => Math.Abs(ownTeam.QueueFighters.ToList().IndexOf(unit) - healerIndex) <= Range);
+                .FirstOrDefault(unit => Math.Abs(fighters.IndexOf(unit) - healerIndex) <= Range);
 
-            Random random = new Random();
-            int amountHealth = random.Next(0, Power + 1);
+            int amountHealth = new Random().Next(0, Power + 1);
 
             if (target != null)
             {
-                target.Health += amountHealth;
-                if (target.Health > 100) target.Health = 100;
-
+                target.Health = Math.Min(100, target.Health + amountHealth);
                 Console.WriteLine($"{Name} лечит {((IUnit)target).Name}, восстанавливая {amountHealth} HP!");
             }
             else
@@ -51,33 +70,49 @@ namespace QueueFightGame
         }
     }
 
-    internal class Archer : BaseUnit, ISpecialActionArcher, ICanBeHealed
+    public class Archer : BaseUnit, ISpecialActionArcher, ICanBeHealed, ICanBeCloned
     {
         public int Range { get; set; }
-        public int Power { get; set ; }
-        public Archer(string name) : base(name, 100f, 0.9f, 5, 25) 
+        public int Power { get; set; }
+
+        public Archer(string name) : base(name, 100f, 0.9f, 5, 25)
         {
             Range = 3;
             Power = 15;
         }
+
+        public Archer(Archer prototype) : base(prototype.Name + "_clone",
+            prototype.Health, prototype.Protection, prototype.Damage, prototype.Cost)
+        {
+            Range = prototype.Range;
+            Power = prototype.Power;
+        }
+
+        public ICanBeCloned Clone()
+        {
+            return new Archer(this);
+        }
+
         public void DoSpecialAttack(IUnit target, Team ownTeam)
         {
-            int archerIndex = ownTeam.QueueFighters.ToList().FindIndex(unit => unit == this);
+            if (target == null) throw new ArgumentNullException(nameof(target));
+            if (ownTeam == null) throw new ArgumentNullException(nameof(ownTeam));
 
-            if (archerIndex >= Range)
+            int archerIndex = ownTeam.Fighters.IndexOf(this);
+            int targetIndex = ownTeam.Fighters.IndexOf(target);
+
+            if (Math.Abs(archerIndex - targetIndex) > Range)
             {
-                Console.WriteLine($"{Name} не может стрелять, его обзор закрыт!");
+                Console.WriteLine($"{Name} не может атаковать {target.Name} - цель вне досягаемости!");
                 return;
             }
 
-            Random random = new Random();
-            bool isHit = random.Next(100) < 70;
-
+            bool isHit = new Random().Next(100) < 70;
             if (isHit)
             {
-                float newDamage = Power * target.Protection;
-                Console.WriteLine($"{Name} стреляет в {target.Name} и попадает, нанося {newDamage} урона!");
-                target.Health -= newDamage;
+                float damage = Power * target.Protection;
+                target.Health -= damage;
+                Console.WriteLine($"{Name} стреляет в {target.Name} и попадает, нанося {damage} урона!");
             }
             else
             {
@@ -85,7 +120,51 @@ namespace QueueFightGame
             }
         }
     }
-    internal class StoneWall : BaseWall
+
+    public class Mage : BaseUnit, ICanBeHealed, ISpecialActionMage
+    {
+        public int CloneRange { get; } = 2;
+
+        public Mage(string name) : base(name, 100f, 0.8f, 20, 25) { }
+
+        public void DoClone(Team ownTeam)
+        {
+            if (ownTeam == null) throw new ArgumentNullException(nameof(ownTeam));
+
+            if (new Random().Next(100) >= 20)                
+            {
+                Console.WriteLine($"{Name} попытался создать клона, но заклинание не сработало!");
+                return;
+            }
+
+            var fighters = ownTeam.Fighters;
+            int mageIndex = fighters.IndexOf(this);
+
+            var possibleTargets = fighters
+                .Where((u, index) =>
+                    index != mageIndex &&
+                    Math.Abs(index - mageIndex) <= CloneRange &&
+                    u is ICanBeCloned)
+                .ToList();
+
+            if (!possibleTargets.Any())
+            {
+                Console.WriteLine($"{Name} не нашел подходящих целей для клонирования рядом!");
+                return;
+            }
+
+            var target = possibleTargets[new Random().Next(possibleTargets.Count)];
+            var clone = ((ICanBeCloned)target).Clone();
+
+            if (clone is IUnit unitClone)
+            {
+                ownTeam.Fighters.Insert(mageIndex + 1, unitClone);
+                Console.WriteLine($"{Name} успешно создал клона {unitClone.Name}!");
+            }
+        }
+    }
+
+    public class StoneWall : BaseWall
     {
         public StoneWall() : base("Каменная стена", 200, 0.3f) { }
     }

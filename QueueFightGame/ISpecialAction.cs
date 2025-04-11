@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace QueueFightGame
 {
-    internal interface ISpecialActionHealer
+    public interface ISpecialActionHealer
     {
         int Range { get; }
         int Power { get; }
@@ -14,11 +14,18 @@ namespace QueueFightGame
         void DoHeal(Team ownTeam);
     }
 
-    internal interface ISpecialActionArcher
+    public interface ISpecialActionArcher
     {
         int Range { get; }
         int Power { get; }
 
         void DoSpecialAttack(IUnit target, Team ownTeam);
+    }
+
+    public interface ISpecialActionMage
+    {
+        int CloneRange { get; }
+
+        void DoClone(Team ownTeam);
     }
 }

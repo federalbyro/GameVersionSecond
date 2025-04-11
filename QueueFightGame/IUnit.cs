@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace QueueFightGame
 {
-    internal interface IUnit
+    public interface IUnit
     {
         string Name { get; }
         float Health { get; set; }
@@ -18,7 +18,7 @@ namespace QueueFightGame
         void Attack(IUnit target);
     }
 
-    internal interface IWall
+    public interface IWall
     {
         string Name { get; }
         float Health { get; set; }

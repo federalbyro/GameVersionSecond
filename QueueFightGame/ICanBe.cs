@@ -6,14 +6,13 @@ using System.Threading.Tasks;
 
 namespace QueueFightGame
 {
-    internal interface ICanBeHealed
+    public interface ICanBeHealed
     {
         string Name { get; }
         float Health { get; set; }
     }
-    internal interface ICanBeCloned
+    public interface ICanBeCloned : IUnit
     {
-        //string Name { get; }
-        //float Health { get; set; }
+        ICanBeCloned Clone();
     }
 }

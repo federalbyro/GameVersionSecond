@@ -6,13 +6,5 @@ using System.Threading.Tasks;
 
 namespace QueueFightGame
 {
-    internal class SaveGame
-    {
 
-    }
-
-    internal class LoadGame
-    {
-
-    }
 }

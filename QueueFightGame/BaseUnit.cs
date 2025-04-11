@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace QueueFightGame
 {
-    internal abstract class BaseUnit : IUnit
+    public abstract class BaseUnit : IUnit
     {
         public string Name { get; private set; }
         public float Health { get; set; }
@@ -35,7 +35,7 @@ namespace QueueFightGame
             Console.WriteLine($"Наносит урон {newDamage} {target.Name}");
         }
     }
-    internal class WallAdapter : BaseUnit
+    public class WallAdapter : BaseUnit
     {
         private BaseWall wall;
 
@@ -49,7 +49,7 @@ namespace QueueFightGame
         }
     }
 
-    internal abstract class BaseWall : IWall
+    public abstract class BaseWall : IWall
     {
         public string Name { get; }
         public float Health { get; set; }

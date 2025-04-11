@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace QueueFightGame
 {
-    internal class GameManager
+    public class GameManager
     {
-
         private Team redTeam;
         private Team blueTeam;
 
@@ -17,11 +14,11 @@ namespace QueueFightGame
             redTeam = new Team("Red", 200);
             blueTeam = new Team("Blue", 200);
 
-            CreatFighters();
+            CreateFighters();
             Battle();
         }
 
-        public void CreatFighters()
+        public void CreateFighters()
         {
             BaseUnit weakFighter1 = new WeakFighter();
             BaseUnit weakFighter2 = new WeakFighter();
@@ -36,13 +33,16 @@ namespace QueueFightGame
             BaseWall wall = new StoneWall();
             WallAdapter wallAdapter1 = new WallAdapter(wall);
             WallAdapter wallAdapter2 = new WallAdapter(wall);
+            BaseUnit mage1 = new Mage("redMage");
+            BaseUnit mage2 = new Mage("BlueMage");
 
             redTeam.AddFighter(wallAdapter1);
             redTeam.AddFighter(archer4);
             redTeam.AddFighter(archer1);
             redTeam.AddFighter(strongFighter2);
             redTeam.AddFighter(weakFighter1);
-            redTeam.AddFighter (healer1);
+            redTeam.AddFighter(healer1);
+            redTeam.AddFighter(mage1);
 
             Console.WriteLine($"Money RedTeam {redTeam.Money}");
 
@@ -54,69 +54,113 @@ namespace QueueFightGame
             blueTeam.AddFighter(strongFighter1);
             blueTeam.AddFighter(archer2);
             blueTeam.AddFighter(healer2);
+            blueTeam.AddFighter(mage2);
 
-            
             Console.WriteLine($"Money BlueTeam {blueTeam.Money}");
         }
 
         private Team RandomStartAttack()
         {
             Random randomStartAttack = new Random();
-            bool redTeamStarts = randomStartAttack.Next(2) == 0;
-            if (redTeamStarts)
-            {
-                return redTeam;
-            }
-            return blueTeam;
+            return randomStartAttack.Next(2) == 0 ? redTeam : blueTeam;
         }
 
         public void Battle()
         {
             Team attackingTeam = RandomStartAttack();
-            Team defendingTeam = (attackingTeam == redTeam) ? blueTeam : redTeam;
+            Team defendingTeam = attackingTeam == redTeam ? blueTeam : redTeam;
+            int round = 1;
 
             while (redTeam.HasFighters() && blueTeam.HasFighters())
             {
-                Console.WriteLine("Нажмите любую клавишу, чтобы продолжить...");
+                Console.WriteLine("\nНажмите любую клавишу, чтобы продолжить...");
                 Console.ReadKey();
 
                 redTeam.ShowTeam();
                 blueTeam.ShowTeam();
 
-                Console.WriteLine("\n--- Новый раунд ---");
+                Console.WriteLine($"\n--- Раунд {round++} ---");
                 Console.WriteLine($"Ходит команда: {(attackingTeam == redTeam ? "Красная" : "Синяя")}");
 
                 IUnit attacker = attackingTeam.GetNextFighter();
                 IUnit defender = defendingTeam.GetNextFighter();
 
-                Console.WriteLine($"\n{attacker.Name} | HP: {attacker.Health} атакует {defender.Name}| HP: {defender.Health}");
+                if (attacker == null || defender == null)
+                {
+                    Console.WriteLine("Ошибка: отсутствует один из бойцов!");
+                    break;
+                }
+
+                Console.WriteLine($"\n{attacker.Name} (HP: {attacker.Health}) атакует {defender.Name} (HP: {defender.Health})");
                 attacker.Attack(defender);
 
-                foreach (IUnit unit in attackingTeam.QueueFighters.Skip(1))
-                {
-                    if (unit is Archer archer)
-                    {
-                        archer.DoSpecialAttack(defender, attacker.Team);
-                    }
-                    if (unit is Healer healer)
-                    {
-                        healer.DoHeal(attacker.Team);
-                    }
-                }
+                ProcessSpecialAbilities(attackingTeam, defender);
 
                 if (defender.Health <= 0)
                 {
-                    Console.WriteLine($"{defender.Name} пал в бою!");
+                    Console.WriteLine($"\n{defender.Name} пал в бою!");
                     defendingTeam.RemoveFighter();
                 }
-
                 (attackingTeam, defendingTeam) = (defendingTeam, attackingTeam);
             }
 
-            Console.WriteLine(redTeam.HasFighters() ? "Красная команда победила!" : "Синяя команда победила!");
+            if (!redTeam.HasFighters() || !blueTeam.HasFighters())
+            {
+                Console.WriteLine(redTeam.HasFighters()
+                    ? "\nКрасная команда победила!"
+                    : "\nСиняя команда победила!");
+            }
+            else
+            {
+                Console.WriteLine("\nБой завершен по достижению максимального количества раундов!");
+            }
         }
 
+        private void ProcessSpecialAbilities(Team team, IUnit target)
+        {
+            // Создаем копию списка для безопасной итерации
+            var fighters = team.Fighters.Skip(1).ToList();
 
+            foreach (var unit in fighters)
+            {
+                try
+                {
+                    if (unit is Archer archer)
+                    {
+                        archer.DoSpecialAttack(target, team);
+                    }
+                    else if (unit is Healer healer)
+                    {
+                        healer.DoHeal(team);
+                    }
+                    else if (unit is Mage mage)
+                    {
+                        SafeMageClone(mage, team);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Ошибка при выполнении способности: {ex.Message}");
+                }
+            }
+        }
 
+        private void SafeMageClone(Mage mage, Team team)
+        {
+            try
+            {
+                int countBefore = team.Fighters.Count;
+                mage.DoClone(team);
+
+                if (team.Fighters.Count == countBefore)
+                {
+                    Console.WriteLine($"{mage.Name} не смог создать клона!");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"{mage.Name} провалил заклинание клонирования: {ex.Message}");
+            }
+        }
     }
 }
