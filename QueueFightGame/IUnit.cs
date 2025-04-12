@@ -9,10 +9,12 @@ namespace QueueFightGame
     public interface IUnit
     {
         string Name { get; }
+        int ID { get;  }
         float Health { get; set; }
         float Protection { get; }
         float Damage { get; }
         float Cost { get; }
+        string Description { get; }
         Team Team { get; set; }
 
         void Attack(IUnit target);

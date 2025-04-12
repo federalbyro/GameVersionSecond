@@ -9,19 +9,23 @@ namespace QueueFightGame
     public abstract class BaseUnit : IUnit
     {
         public string Name { get; private set; }
+        public int ID { get; private set; }
         public float Health { get; set; }
         public float Protection { get; private set; }
         public float Damage { get; private set; }
         public float Cost { get; private set; }
+        public string Description { get; private set; }
         public Team Team { get; set; }
 
-        public BaseUnit(string name, float health, float protection, float damage, float cost) 
+        public BaseUnit(string name, int id, float health, float protection, float damage, float cost, string description) 
         {
             Name = name;
+            ID = id;
             Health = health;
             Protection = protection;
             Damage = damage;
             Cost = cost;
+            Description = description;
             Team = null;
         }
 
