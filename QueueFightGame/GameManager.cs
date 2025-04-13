@@ -20,21 +20,22 @@ namespace QueueFightGame
 
         public void CreateFighters()
         {
-            BaseUnit weakFighter1 = new WeakFighter();
-            BaseUnit weakFighter2 = new WeakFighter();
-            BaseUnit strongFighter1 = new StrongFighter();
-            BaseUnit strongFighter2 = new StrongFighter();
-            BaseUnit archer1 = new Archer("Red_Archer");
-            BaseUnit archer2 = new Archer("Blue_Archer");
-            BaseUnit archer3 = new Archer("Blue_Archer");
-            BaseUnit archer4 = new Archer("Red_Archer");
-            BaseUnit healer1 = new Healer("Red_Healer");
-            BaseUnit healer2 = new Healer("Blue_Healer");
-            BaseWall wall = new StoneWall();
-            WallAdapter wallAdapter1 = new WallAdapter(wall);
-            WallAdapter wallAdapter2 = new WallAdapter(wall);
-            BaseUnit mage1 = new Mage("redMage");
-            BaseUnit mage2 = new Mage("BlueMage");
+            BaseUnit weakFighter1 = new WeakFighter(1);
+            BaseUnit weakFighter2 = new WeakFighter(2);
+            BaseUnit strongFighter1 = new StrongFighter(3);
+            BaseUnit strongFighter2 = new StrongFighter(4);
+            BaseUnit archer1 = new Archer("Red_Archer", 5);
+            BaseUnit archer2 = new Archer("Blue_Archer", 6);
+            BaseUnit archer3 = new Archer("Blue_Archer", 7);
+            BaseUnit archer4 = new Archer("Red_Archer", 8);
+            BaseUnit healer1 = new Healer("Red_Healer", 9);
+            BaseUnit healer2 = new Healer("Blue_Healer", 10);
+            BaseWall wall1 = new StoneWall();
+            BaseWall wall2 = new StoneWall();
+            WallAdapter wallAdapter1 = new WallAdapter(wall1, 13);
+            WallAdapter wallAdapter2 = new WallAdapter(wall2, 14);
+            BaseUnit mage1 = new Mage("redMage", 15);
+            BaseUnit mage2 = new Mage("BlueMage", 16);
 
             redTeam.AddFighter(wallAdapter1);
             redTeam.AddFighter(archer4);

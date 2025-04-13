@@ -6,9 +6,9 @@ namespace QueueFightGame
 {
     public class WeakFighter : BaseUnit, ICanBeHealed, ICanBeCloned
     {
-        public WeakFighter() : base("WeakFighter", 100f, 0.7f, 40, 15) { }
-        public WeakFighter(WeakFighter prototype) : base(prototype.Name + "_clone",
-            prototype.Health, prototype.Protection, prototype.Damage, prototype.Cost)
+        public WeakFighter(int ID) : base("WeakFighter", ID, 100f, 0.7f, 40, 15, "Слабый боец") { }
+        public WeakFighter(WeakFighter prototype) : base(prototype.Name + "_clone", prototype.ID,
+            prototype.Health, prototype.Protection, prototype.Damage, prototype.Cost, prototype.Description)
         { }
 
         public ICanBeCloned Clone()
@@ -19,7 +19,7 @@ namespace QueueFightGame
 
     public class StrongFighter : BaseUnit
     {
-        public StrongFighter() : base("StrongFighter", 100f, 0.5f, 60, 30) { }
+        public StrongFighter(int ID) : base("StrongFighter", ID, 100f, 0.5f, 60, 30, "Сильный") { }
     }
 
     public class Healer : BaseUnit, ISpecialActionHealer, ICanBeCloned
@@ -27,14 +27,14 @@ namespace QueueFightGame
         public int Range { get; private set; }
         public int Power { get; private set; }
 
-        public Healer(string name) : base(name, 100f, 1f, 5, 10)
+        public Healer(string name, int ID) : base(name, ID, 100f, 1f, 5, 10, "Лекарь")
         {
             Range = 3;
             Power = 15;
         }
 
-        public Healer(Healer prototype) : base(prototype.Name + "_clone",
-            prototype.Health, prototype.Protection, prototype.Damage, prototype.Cost)
+        public Healer(Healer prototype) : base(prototype.Name + "_clone", prototype.ID,
+        prototype.Health, prototype.Protection, prototype.Damage, prototype.Cost, prototype.Description)
         {
             Range = prototype.Range;
             Power = prototype.Power;
@@ -75,14 +75,14 @@ namespace QueueFightGame
         public int Range { get; set; }
         public int Power { get; set; }
 
-        public Archer(string name) : base(name, 100f, 0.9f, 5, 25)
+        public Archer(string name, int ID) : base(name, ID, 100f, 0.9f, 5, 25, "Лучник")
         {
             Range = 3;
             Power = 15;
         }
 
-        public Archer(Archer prototype) : base(prototype.Name + "_clone",
-            prototype.Health, prototype.Protection, prototype.Damage, prototype.Cost)
+        public Archer(Archer prototype) : base(prototype.Name + "_clone", prototype.ID,
+            prototype.Health, prototype.Protection, prototype.Damage, prototype.Cost, prototype.Description)
         {
             Range = prototype.Range;
             Power = prototype.Power;
@@ -125,7 +125,7 @@ namespace QueueFightGame
     {
         public int CloneRange { get; } = 2;
 
-        public Mage(string name) : base(name, 100f, 0.8f, 20, 25) { }
+        public Mage(string name, int ID) : base(name, ID, 100f, 0.8f, 20, 25, "Маг") { }
 
         public void DoClone(Team ownTeam)
         {

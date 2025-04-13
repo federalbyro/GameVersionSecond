@@ -43,7 +43,7 @@ namespace QueueFightGame
     {
         private BaseWall wall;
 
-        public WallAdapter(BaseWall wall) : base(wall.Name, wall.Health, wall.Protection, 0, 30)
+        public WallAdapter(BaseWall wall, int ID) : base(wall.Name, ID, wall.Health, wall.Protection, 0, 30, "Стена")
         {
             Team = null;
         }
