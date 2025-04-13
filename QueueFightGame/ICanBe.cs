@@ -15,4 +15,22 @@ namespace QueueFightGame
     {
         ICanBeCloned Clone();
     }
+
+    public interface ICanBeBuff
+    {
+        BuffType BuffType { get; }
+        float DamageMultiplier { get; }
+        bool ShouldBlockDamage(IUnit attacker);
+        void RemoveBuff();
+        IUnit ApplyBuffToUnit(IUnit unit);
+    }
+
+    public enum BuffType
+    {
+        None,
+        Spear,
+        Horse,
+        Shield,
+        Helmet
+    }
 }

@@ -52,6 +52,7 @@
     <Compile Include="LoadSaveGame.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StrongFighterDecorator.cs" />
     <Compile Include="Team.cs" />
     <Compile Include="Fighters.cs" />
   </ItemGroup>

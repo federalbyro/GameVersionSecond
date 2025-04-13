@@ -28,4 +28,9 @@ namespace QueueFightGame
 
         void DoClone(Team ownTeam);
     }
+    public interface ISpecialActionWeakFighter
+    {
+        int BuffRange { get; }
+        void DoBuff(Team ownTeam);
+    }
 }

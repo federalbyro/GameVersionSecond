@@ -30,14 +30,14 @@ namespace QueueFightGame
             BaseUnit archer4 = new Archer("Red_Archer", 8);
             BaseUnit healer1 = new Healer("Red_Healer", 9);
             BaseUnit healer2 = new Healer("Blue_Healer", 10);
-            BaseWall wall1 = new StoneWall();
-            BaseWall wall2 = new StoneWall();
-            WallAdapter wallAdapter1 = new WallAdapter(wall1, 13);
-            WallAdapter wallAdapter2 = new WallAdapter(wall2, 14);
+            //BaseWall wall1 = new StoneWall();
+            //BaseWall wall2 = new StoneWall();
+            //WallAdapter wallAdapter1 = new WallAdapter(wall1, 13);
+            //WallAdapter wallAdapter2 = new WallAdapter(wall2, 14);
             BaseUnit mage1 = new Mage("redMage", 15);
             BaseUnit mage2 = new Mage("BlueMage", 16);
 
-            redTeam.AddFighter(wallAdapter1);
+            //redTeam.AddFighter(wallAdapter1);
             redTeam.AddFighter(archer4);
             redTeam.AddFighter(archer1);
             redTeam.AddFighter(strongFighter2);
@@ -49,7 +49,7 @@ namespace QueueFightGame
 
             Console.WriteLine("---");
 
-            blueTeam.AddFighter(wallAdapter2);
+            //blueTeam.AddFighter(wallAdapter2);
             blueTeam.AddFighter(archer3);
             blueTeam.AddFighter(weakFighter2);
             blueTeam.AddFighter(strongFighter1);
@@ -92,8 +92,31 @@ namespace QueueFightGame
                     break;
                 }
 
+                float defenderInitialHealth = defender.Health;
+
                 Console.WriteLine($"\n{attacker.Name} (HP: {attacker.Health}) атакует {defender.Name} (HP: {defender.Health})");
+
+                // Обработка баффов перед атакой
+                if (defender is StrongFighter strongDefender && strongDefender is ICanBeBuff buffedDefender)
+                {
+                    if (buffedDefender.ShouldBlockDamage(attacker))
+                    {
+                        Console.WriteLine($"{defender.Name} защищён от атаки {attacker.Name} баффом {buffedDefender.BuffType}!");
+                        buffedDefender.RemoveBuff();
+
+                        // Меняем команды местами для следующего хода
+                        (attackingTeam, defendingTeam) = (defendingTeam, attackingTeam);
+                        continue;
+                    }
+                }
+
                 attacker.Attack(defender);
+
+                // Снимаем бафф если защитник получил урон
+                if (defender.Health < defenderInitialHealth && defender is StrongFighter damagedStrong)
+                {
+                    damagedStrong.RemoveBuff();
+                }
 
                 ProcessSpecialAbilities(attackingTeam, defender);
 
@@ -102,6 +125,7 @@ namespace QueueFightGame
                     Console.WriteLine($"\n{defender.Name} пал в бою!");
                     defendingTeam.RemoveFighter();
                 }
+
                 (attackingTeam, defendingTeam) = (defendingTeam, attackingTeam);
             }
 
@@ -120,13 +144,17 @@ namespace QueueFightGame
         private void ProcessSpecialAbilities(Team team, IUnit target)
         {
             // Создаем копию списка для безопасной итерации
-            var fighters = team.Fighters.Skip(1).ToList();
+            var fighters = team.Fighters.ToList();
 
             foreach (var unit in fighters)
             {
                 try
                 {
-                    if (unit is Archer archer)
+                    if (unit is ISpecialActionWeakFighter squire && unit.Health > 0)
+                    {
+                        squire.DoBuff(team);
+                    }
+                    else if (unit is Archer archer)
                     {
                         archer.DoSpecialAttack(target, team);
                     }

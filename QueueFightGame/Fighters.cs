@@ -4,22 +4,100 @@ using System.Linq;
 
 namespace QueueFightGame
 {
-    public class WeakFighter : BaseUnit, ICanBeHealed, ICanBeCloned
+    public class WeakFighter : BaseUnit, ICanBeHealed, ICanBeCloned, ISpecialActionWeakFighter
     {
-        public WeakFighter(int ID) : base("WeakFighter", ID, 100f, 0.7f, 40, 15, "Слабый боец") { }
-        public WeakFighter(WeakFighter prototype) : base(prototype.Name + "_clone", prototype.ID,
-            prototype.Health, prototype.Protection, prototype.Damage, prototype.Cost, prototype.Description)
-        { }
+        public int BuffRange { get; } = 1;
+        private bool _hasAppliedBuff = false;
+        private StrongFighter _knight;
+
+        public WeakFighter(int ID) : base("WeakFighter", ID, 100f, 0.7f, 40, 15, "Оруженосец") { }
 
         public ICanBeCloned Clone()
         {
-            return new WeakFighter(this);
+            return new WeakFighter(ID) { _hasAppliedBuff = this._hasAppliedBuff };
+        }
+
+        public void DoBuff(Team ownTeam)
+        {
+            if (_hasAppliedBuff || ownTeam == null || Health <= 0) return;
+
+            // Находим ближайшего StrongFighter
+            var knights = ownTeam.Fighters
+                .Where(u => u is StrongFighter k && k.Health > 0)
+                .Cast<StrongFighter>()
+                .OrderBy(k => Math.Abs(ownTeam.Fighters.IndexOf(k) - ownTeam.Fighters.IndexOf(this)))
+                .FirstOrDefault();
+
+            if (knights != null && Math.Abs(ownTeam.Fighters.IndexOf(knights) - ownTeam.Fighters.IndexOf(this)) <= BuffRange)
+            {
+                _knight = knights;
+                _knight.SetSquire(this);
+
+                // Применяем случайный бафф
+                var buffs = new[] { BuffType.Spear, BuffType.Horse, BuffType.Shield, BuffType.Helmet };
+                var selectedBuff = buffs[new Random().Next(buffs.Length)];
+
+                _knight.ApplyBuff(selectedBuff);
+                _hasAppliedBuff = true;
+            }
         }
     }
-
-    public class StrongFighter : BaseUnit
+    public class StrongFighter : BaseUnit, ICanBeHealed
     {
+        private WeakFighter _squire;
+        private ICanBeBuff _currentBuff;
+
         public StrongFighter(int ID) : base("StrongFighter", ID, 100f, 0.5f, 60, 30, "Сильный") { }
+
+        public void SetSquire(WeakFighter squire)
+        {
+            _squire = squire;
+            Console.WriteLine($"{Name} получает оруженосца {squire.Name}");
+        }
+
+        public void ApplyBuff(BuffType buffType)
+        {
+            switch (buffType)
+            {
+                case BuffType.Spear:
+                    _currentBuff = new SpearBuffDecorator(this);
+                    break;
+                case BuffType.Horse:
+                    _currentBuff = new HorseBuffDecorator(this);
+                    break;
+                case BuffType.Shield:
+                    _currentBuff = new ShieldBuffDecorator(this);
+                    break;
+                case BuffType.Helmet:
+                    _currentBuff = new HelmetBuffDecorator(this);
+                    break;
+                default:
+                    _currentBuff = this;
+                    break;
+            }
+
+            Console.WriteLine($"{Name} получает бафф {buffType}");
+        }
+
+        public void RemoveBuff()
+        {
+            if (_currentBuff != null)
+            {
+                Console.WriteLine($"{Name} теряет бафф {_currentBuff.BuffType}");
+                _currentBuff = null;
+            }
+        }
+
+        public IUnit GetBufferedUnit()
+        {
+            return _currentBuff?.ApplyBuffToUnit(this) ?? this;
+        }
+
+        public override void Attack(IUnit target)
+        {
+            var unitToAttack = _currentBuff != null ? _currentBuff : this;
+            unitToAttack.Attack(target);
+        }
     }
 
     public class Healer : BaseUnit, ISpecialActionHealer, ICanBeCloned
@@ -131,9 +209,8 @@ namespace QueueFightGame
         {
             if (ownTeam == null) throw new ArgumentNullException(nameof(ownTeam));
 
-            if (new Random().Next(100) >= 20)                
+            if (new Random().Next(100) >= 5)                
             {
-                Console.WriteLine($"{Name} попытался создать клона, но заклинание не сработало!");
                 return;
             }
 
