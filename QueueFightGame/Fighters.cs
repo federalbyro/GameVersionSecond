@@ -42,7 +42,7 @@ namespace QueueFightGame
             }
         }
     }
-    public class StrongFighter : BaseUnit, ICanBeHealed
+    public class StrongFighter : BaseUnit,
     {
         private WeakFighter _squire;
         private ICanBeBuff _currentBuff;
@@ -57,6 +57,9 @@ namespace QueueFightGame
 
         public void ApplyBuff(BuffType buffType)
         {
+            if (_currentBuff != null && _currentBuff.BuffType == buffType)
+                return; // Бафф такого типа уже активен
+
             switch (buffType)
             {
                 case BuffType.Spear:
@@ -71,12 +74,21 @@ namespace QueueFightGame
                 case BuffType.Helmet:
                     _currentBuff = new HelmetBuffDecorator(this);
                     break;
-                default:
-                    _currentBuff = this;
+                case BuffType.None:
+                    _currentBuff = null;
                     break;
+                default:
+                    return; // Неизвестный тип баффа
             }
 
-            Console.WriteLine($"{Name} получает бафф {buffType}");
+            if (_currentBuff != null)
+            {
+                Console.WriteLine($"{Name} получает бафф {buffType}");
+            }
+            else if (buffType == BuffType.None)
+            {
+                Console.WriteLine($"{Name} снимает все баффы");
+            }
         }
 
         public void RemoveBuff()
@@ -88,16 +100,24 @@ namespace QueueFightGame
             }
         }
 
-        public IUnit GetBufferedUnit()
-        {
-            return _currentBuff?.ApplyBuffToUnit(this) ?? this;
-        }
-
         public override void Attack(IUnit target)
         {
-            var unitToAttack = _currentBuff != null ? _currentBuff : this;
-            unitToAttack.Attack(target);
+            float damage = Damage * (_currentBuff?.DamageMultiplier ?? 1f) * target.Protection;
+            target.Health -= damage;
+            Console.WriteLine($"{Name} наносит {damage} урона {target.Name}");
+
+            if (_currentBuff != null &&
+               (_currentBuff.BuffType == BuffType.Spear || _currentBuff.BuffType == BuffType.Horse))
+            {
+                RemoveBuff();
+            }
         }
+
+        public bool HasBuff(BuffType buffType) =>
+            _currentBuff != null && _currentBuff.BuffType == buffType;
+
+        public bool ShouldBlockDamage(IUnit attacker) =>
+            _currentBuff?.ShouldBlockDamage(attacker) ?? false;
     }
 
     public class Healer : BaseUnit, ISpecialActionHealer, ICanBeCloned

@@ -1,79 +1,91 @@
-﻿using System;
-
+﻿// BuffDecorators.cs
 namespace QueueFightGame
 {
-    public abstract class StrongFighterDecorator : IUnit, ICanBeBuff
+    public class SpearBuffDecorator : ICanBeBuff
     {
-        protected readonly IUnit _decoratedUnit;
+        private readonly StrongFighter _fighter;
 
-        public BuffType BuffType { get; protected set; }
-        public float DamageMultiplier { get; protected set; } = 1f;
+        public BuffType BuffType => BuffType.Spear;
+        public float DamageMultiplier => 1.5f;
 
-        // Делегируем все свойства оригинальному юниту
-        public string Name => _decoratedUnit.Name;
-        public int ID => _decoratedUnit.ID;
-        public float Health
+        public SpearBuffDecorator(StrongFighter fighter)
         {
-            get => _decoratedUnit.Health;
-            set => _decoratedUnit.Health = value;
-        }
-        public float Protection => _decoratedUnit.Protection;
-        public float Damage => _decoratedUnit.Damage * DamageMultiplier;
-        public float Cost => _decoratedUnit.Cost;
-        public string Description => _decoratedUnit.Description;
-        public Team Team
-        {
-            get => _decoratedUnit.Team;
-            set => _decoratedUnit.Team = value;
+            _fighter = fighter;
         }
 
-        protected StrongFighterDecorator(IUnit unit)
+        public bool ShouldBlockDamage(IUnit attacker) => false;
+
+        public void RemoveBuff()
         {
-            _decoratedUnit = unit ?? throw new ArgumentNullException(nameof(unit));
+            _fighter.RemoveBuff();
         }
 
-        public virtual void Attack(IUnit target)
+        public IUnit ApplyBuffToUnit(IUnit unit) => this;
+    }
+
+    public class HorseBuffDecorator : ICanBeBuff
+    {
+        private readonly StrongFighter _fighter;
+
+        public BuffType BuffType => BuffType.Horse;
+        public float DamageMultiplier => 1.3f;
+
+        public HorseBuffDecorator(StrongFighter fighter)
         {
-            if (target == null)
-            {
-                Console.WriteLine("Цель для атаки не указана!");
-                return;
-            }
-
-            float damage = CalculateDamage(target);
-            target.Health -= damage;
-
-            Console.WriteLine($"{Name} наносит {damage} урона {target.Name}");
-
-            RemoveBuffAfterAttack();
+            _fighter = fighter;
         }
 
-        protected virtual float CalculateDamage(IUnit target)
+        public bool ShouldBlockDamage(IUnit attacker) => true;
+
+        public void RemoveBuff()
         {
-            return Damage * target.Protection;
+            _fighter.RemoveBuff();
         }
 
-        protected virtual void RemoveBuffAfterAttack()
+        public IUnit ApplyBuffToUnit(IUnit unit) => this;
+    }
+
+    public class ShieldBuffDecorator : ICanBeBuff
+    {
+        private readonly StrongFighter _fighter;
+
+        public BuffType BuffType => BuffType.Shield;
+        public float DamageMultiplier => 1f;
+
+        public ShieldBuffDecorator(StrongFighter fighter)
         {
-            if (BuffType == BuffType.Spear || BuffType == BuffType.Horse)
-            {
-                RemoveBuff();
-            }
+            _fighter = fighter;
         }
 
-        public abstract bool ShouldBlockDamage(IUnit attacker);
+        public bool ShouldBlockDamage(IUnit attacker) => true;
 
-        public virtual void RemoveBuff()
+        public void RemoveBuff()
         {
-            if (_decoratedUnit is StrongFighter fighter)
-            {
-                fighter.RemoveBuff();
-            }
+            _fighter.RemoveBuff();
         }
 
-        public IUnit ApplyBuffToUnit(IUnit unit)
+        public IUnit ApplyBuffToUnit(IUnit unit) => this;
+    }
+
+    public class HelmetBuffDecorator : ICanBeBuff
+    {
+        private readonly StrongFighter _fighter;
+
+        public BuffType BuffType => BuffType.Helmet;
+        public float DamageMultiplier => 1f;
+
+        public HelmetBuffDecorator(StrongFighter fighter)
         {
-            return this;
+            _fighter = fighter;
         }
+
+        public bool ShouldBlockDamage(IUnit attacker) => attacker is Archer;
+
+        public void RemoveBuff()
+        {
+            _fighter.RemoveBuff();
+        }
+
+        public IUnit ApplyBuffToUnit(IUnit unit) => this;
     }
 }
