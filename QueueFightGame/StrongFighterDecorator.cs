@@ -1,4 +1,6 @@
 ﻿// BuffDecorators.cs
+using System;
+
 namespace QueueFightGame
 {
     public class SpearBuffDecorator : ICanBeBuff
@@ -10,7 +12,7 @@ namespace QueueFightGame
 
         public SpearBuffDecorator(StrongFighter fighter)
         {
-            _fighter = fighter;
+            _fighter = fighter ?? throw new ArgumentNullException(nameof(fighter));
         }
 
         public bool ShouldBlockDamage(IUnit attacker) => false;
@@ -19,9 +21,7 @@ namespace QueueFightGame
         {
             _fighter.RemoveBuff();
         }
-
-        public IUnit ApplyBuffToUnit(IUnit unit) => this;
-    }
+    }    
 
     public class HorseBuffDecorator : ICanBeBuff
     {
@@ -32,7 +32,7 @@ namespace QueueFightGame
 
         public HorseBuffDecorator(StrongFighter fighter)
         {
-            _fighter = fighter;
+            _fighter = fighter ?? throw new ArgumentNullException(nameof(fighter));
         }
 
         public bool ShouldBlockDamage(IUnit attacker) => true;
@@ -41,8 +41,6 @@ namespace QueueFightGame
         {
             _fighter.RemoveBuff();
         }
-
-        public IUnit ApplyBuffToUnit(IUnit unit) => this;
     }
 
     public class ShieldBuffDecorator : ICanBeBuff
@@ -51,6 +49,16 @@ namespace QueueFightGame
 
         public BuffType BuffType => BuffType.Shield;
         public float DamageMultiplier => 1f;
+
+        // Реализация IUnit
+        public string Name => _fighter.Name;
+        public int ID => _fighter.ID;
+        public float Health { get => _fighter.Health; set => _fighter.Health = value; }
+        public float Protection => _fighter.Protection;
+        public float Damage => _fighter.Damage * DamageMultiplier;
+        public float Cost => _fighter.Cost;
+        public string Description => _fighter.Description;
+        public Team Team { get => _fighter.Team; set => _fighter.Team = value; }
 
         public ShieldBuffDecorator(StrongFighter fighter)
         {
@@ -64,7 +72,12 @@ namespace QueueFightGame
             _fighter.RemoveBuff();
         }
 
-        public IUnit ApplyBuffToUnit(IUnit unit) => this;
+        public void Attack(IUnit target)
+        {
+            float damage = Damage * target.Protection;
+            target.Health -= damage;
+            Console.WriteLine($"{Name} наносит {damage} урона {target.Name}");
+        }
     }
 
     public class HelmetBuffDecorator : ICanBeBuff
@@ -76,7 +89,7 @@ namespace QueueFightGame
 
         public HelmetBuffDecorator(StrongFighter fighter)
         {
-            _fighter = fighter;
+            _fighter = fighter ?? throw new ArgumentNullException(nameof(fighter));
         }
 
         public bool ShouldBlockDamage(IUnit attacker) => attacker is Archer;
@@ -85,7 +98,5 @@ namespace QueueFightGame
         {
             _fighter.RemoveBuff();
         }
-
-        public IUnit ApplyBuffToUnit(IUnit unit) => this;
     }
 }

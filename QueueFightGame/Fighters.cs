@@ -42,7 +42,7 @@ namespace QueueFightGame
             }
         }
     }
-    public class StrongFighter : BaseUnit,
+    public class StrongFighter : BaseUnit
     {
         private WeakFighter _squire;
         private ICanBeBuff _currentBuff;

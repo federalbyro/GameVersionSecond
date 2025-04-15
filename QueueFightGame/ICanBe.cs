@@ -22,7 +22,6 @@ namespace QueueFightGame
         float DamageMultiplier { get; }
         bool ShouldBlockDamage(IUnit attacker);
         void RemoveBuff();
-        IUnit ApplyBuffToUnit(IUnit unit);
     }
 
     public enum BuffType
