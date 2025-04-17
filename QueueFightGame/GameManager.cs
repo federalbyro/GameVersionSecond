@@ -8,6 +8,7 @@ namespace QueueFightGame
     {
         private Team redTeam;
         private Team blueTeam;
+        private CommandManager commandManager = new CommandManager();
 
         public GameManager()
         {
@@ -66,6 +67,16 @@ namespace QueueFightGame
             return randomStartAttack.Next(2) == 0 ? redTeam : blueTeam;
         }
 
+        public void Undo()
+        {
+            commandManager.Undo();
+        }
+
+        public void Redo()
+        {
+            commandManager.Redo();
+        }
+
         public void Battle()
         {
             Team attackingTeam = RandomStartAttack();
@@ -74,8 +85,27 @@ namespace QueueFightGame
 
             while (redTeam.HasFighters() && blueTeam.HasFighters())
             {
-                Console.WriteLine("\nНажмите любую клавишу, чтобы продолжить...");
-                Console.ReadKey();
+                Console.WriteLine("\nНажмите:");
+                Console.WriteLine("1 - Следующий ход");
+                Console.WriteLine("2 - Отменить ход (Undo)");
+                Console.WriteLine("3 - Повторить ход (Redo)");
+
+                var key = Console.ReadKey().Key;
+
+                if (key == ConsoleKey.D2 && commandManager.CanUndo)
+                {
+                    commandManager.Undo();
+                    continue;
+                }
+                else if (key == ConsoleKey.D3 && commandManager.CanRedo)
+                {
+                    commandManager.Redo();
+                    continue;
+                }
+                else if (key != ConsoleKey.D1)
+                {
+                    continue;
+                }
 
                 redTeam.ShowTeam();
                 blueTeam.ShowTeam();
@@ -96,54 +126,19 @@ namespace QueueFightGame
 
                 Console.WriteLine($"\n{attacker.Name} (HP: {attacker.Health}) атакует {defender.Name} (HP: {defender.Health})");
 
-                // Обработка баффов перед атакой
-                if (defender is StrongFighter strongDefender && strongDefender is ICanBeBuff buffedDefender)
-                {
-                    if (buffedDefender.ShouldBlockDamage(attacker))
-                    {
-                        Console.WriteLine($"{defender.Name} защищён от атаки {attacker.Name} баффом {buffedDefender.BuffType}!");
-                        buffedDefender.RemoveBuff();
+                // Создаем команду для атаки
+                var attackCommand = new AttackCommand(attacker, defender, attackingTeam, defendingTeam);
+                commandManager.ExecuteCommand(attackCommand);
 
-                        // Меняем команды местами для следующего хода
-                        (attackingTeam, defendingTeam) = (defendingTeam, attackingTeam);
-                        continue;
-                    }
-                }
-
-                attacker.Attack(defender);
-
-                // Снимаем бафф если защитник получил урон
-                if (defender.Health < defenderInitialHealth && defender is StrongFighter damagedStrong)
-                {
-                    damagedStrong.RemoveBuff();
-                }
-
+                // Обработка специальных способностей
                 ProcessSpecialAbilities(attackingTeam, defender);
 
-                if (defender.Health <= 0)
-                {
-                    Console.WriteLine($"\n{defender.Name} пал в бою!");
-                    defendingTeam.RemoveFighter();
-                }
-
                 (attackingTeam, defendingTeam) = (defendingTeam, attackingTeam);
-            }
-
-            if (!redTeam.HasFighters() || !blueTeam.HasFighters())
-            {
-                Console.WriteLine(redTeam.HasFighters()
-                    ? "\nКрасная команда победила!"
-                    : "\nСиняя команда победила!");
-            }
-            else
-            {
-                Console.WriteLine("\nБой завершен по достижению максимального количества раундов!");
             }
         }
 
         private void ProcessSpecialAbilities(Team team, IUnit target)
         {
-            // Создаем копию списка для безопасной итерации
             var fighters = team.Fighters.ToList();
 
             foreach (var unit in fighters)
@@ -156,11 +151,20 @@ namespace QueueFightGame
                     }
                     else if (unit is Archer archer)
                     {
-                        archer.DoSpecialAttack(target, team);
+                        // Создаем команду для специальной атаки лучника
+                        // (реализация аналогична AttackCommand)
                     }
                     else if (unit is Healer healer)
                     {
-                        healer.DoHeal(team);
+                        var healTarget = (ICanBeHealed)team.Fighters
+                            .FirstOrDefault(u => u is ICanBeHealed && u.Health < 100);
+
+                        if (healTarget != null)
+                        {
+                            float healAmount = new Random().Next(0, healer.Power + 1);
+                            var healCommand = new HealCommand(healer, healTarget, healAmount, team);
+                            commandManager.ExecuteCommand(healCommand);
+                        }
                     }
                     else if (unit is Mage mage)
                     {
@@ -178,12 +182,18 @@ namespace QueueFightGame
         {
             try
             {
-                int countBefore = team.Fighters.Count;
-                mage.DoClone(team);
+                var possibleTargets = team.Fighters
+                    .Where(u => u is ICanBeCloned && u != mage)
+                    .Cast<ICanBeCloned>()
+                    .ToList();
 
-                if (team.Fighters.Count == countBefore)
+                if (possibleTargets.Any())
                 {
-                    Console.WriteLine($"{mage.Name} не смог создать клона!");
+                    var target = possibleTargets[new Random().Next(possibleTargets.Count)];
+                    int position = team.Fighters.IndexOf(target as IUnit);
+
+                    var cloneCommand = new CloneCommand(mage, target, team, position);
+                    commandManager.ExecuteCommand(cloneCommand);
                 }
             }
             catch (Exception ex)

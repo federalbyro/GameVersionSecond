@@ -43,7 +43,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AttackCommand.cs" />
     <Compile Include="BaseUnit.cs" />
+    <Compile Include="CommandSystem.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="GameManager.cs" />
     <Compile Include="ICanBe.cs" />

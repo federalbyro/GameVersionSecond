@@ -1,31 +1,41 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using QueueFightGame;
+using System;
 
-namespace QueueFightGame
+public class Game
 {
-    //В этом классе можно реализовать Синглтон или лайзи, может быть только один Manager
-    public class Game
+    private GameManager Manager;
+
+    public Game()
     {
-        private GameManager Manager;
+        Manager = new GameManager();
+    }
 
-        public Game()
+    public void Play()
+    {
+        while (true)
         {
-            Manager = new GameManager();
+            Console.Clear();
+            Console.WriteLine("1 - Начать игру");
+            Console.WriteLine("2 - Отменить ход (Undo)");
+            Console.WriteLine("3 - Повторить ход (Redo)");
+            Console.WriteLine("4 - Выход");
+
+            var key = Console.ReadKey().Key;
+
+            switch (key)
+            {
+                case ConsoleKey.D1:
+                    Manager.Battle();
+                    break;
+                case ConsoleKey.D2:
+                    Manager.Undo();
+                    break;
+                case ConsoleKey.D3:
+                    Manager.Redo();
+                    break;
+                case ConsoleKey.D4:
+                    return;
+            }
         }
-
-        public void Initialize()
-        {
-            throw new NotImplementedException("Метод Initialize() не реализован");
-        }
-
-        public void Play()
-        {
-            throw new NotImplementedException("Метод Play() не реализован");
-        }
-
-
     }
 }
