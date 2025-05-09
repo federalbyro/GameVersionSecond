@@ -16,7 +16,7 @@ namespace QueueFightGame
         public string Description { get; private set; }
         public string IconPath { get; private set; }
         public Team Team { get; set; }
-
+        public override string ToString() => $"{Name}#{ID}";
         protected BaseUnit(string typeName) // Constructor uses UnitConfig
         {
             if (!UnitConfig.Stats.TryGetValue(typeName, out var data))
@@ -117,4 +117,6 @@ namespace QueueFightGame
         // Walls don't have special actions by default
         public override void PerformSpecialAction(Team ownTeam, Team enemyTeam, ILogger logger, CommandManager commandManager) { }
     }
+
+
 }

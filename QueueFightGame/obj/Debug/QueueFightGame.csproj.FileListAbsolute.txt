@@ -20,3 +20,6 @@ C:\Users\Пользователь\coding\С#\GameVersion2\GameVersionSecond\Queu
 C:\Users\Пользователь\coding\С#\GameVersion2\GameVersionSecond\QueueFightGame\bin\Debug\Resources\mag.PNG
 C:\Users\Пользователь\coding\С#\GameVersion2\GameVersionSecond\QueueFightGame\bin\Debug\Resources\zastavka.PNG
 C:\Users\Пользователь\coding\С#\GameVersion2\GameVersionSecond\QueueFightGame\bin\Debug\Resources\battle.PNG
+C:\Users\Пользователь\coding\С#\GameVersion2\GameVersionSecond\QueueFightGame\bin\Debug\Resources\wall.PNG
+C:\Users\Пользователь\coding\С#\GameVersion2\GameVersionSecond\QueueFightGame\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Пользователь\coding\С#\GameVersion2\GameVersionSecond\QueueFightGame\obj\Debug\QueueFig.132B7C36.Up2Date

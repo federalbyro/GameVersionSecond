@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 
 namespace QueueFightGame.UI
@@ -38,6 +39,30 @@ namespace QueueFightGame.UI
             {
                 MessageBox.Show($"Не удалось загрузить фон: {ex.Message}");
             }
+
+            var loadButton = new Button
+            {
+                Text = "Загрузить игру",
+                Size = new Size(180, 60),
+                Location = new Point((ClientSize.Width - 180) / 2, (ClientSize.Height - 60) / 2 + 100),
+                Font = new Font("Segoe UI", 12f, FontStyle.Bold)
+            };
+            loadButton.Click += (s, e) => {
+                using (var dlg = new OpenFileDialog { Filter = "JSON|*.json" })
+                    if (dlg.ShowDialog() == DialogResult.OK)
+                    {
+                        var mgr = new GameManager(new MemoryLogger());
+                        mgr.LoadState(dlg.FileName);
+                        var bf = new BattleForm(mgr);
+                        bf.Show();
+                        this.Hide();
+                        bf.FormClosed += (s2, e2) => this.Close();
+
+
+                    }
+            };
+
+            this.Controls.Add(loadButton);
 
 
             playButton = new Button

@@ -15,10 +15,10 @@ namespace QueueFightGame.UI
 {
     public class BattleForm : Form //  designer не нужен → класс не partial
     {
-        private const int UnitDisplaySize = 96;
-        private const int UnitDisplayMargin = 6;
+        private const int UnitDisplaySize = 128;
+        private const int UnitDisplayMargin = 8;
 
-        private readonly GameManager _gameManager;
+        protected GameManager _gameManager;
         private readonly ILogger _battleLogger;
 
         private Panel _battleField;
@@ -33,6 +33,22 @@ namespace QueueFightGame.UI
         private Button _undoBtn;
         private Button _exitBtn;
         private bool _redOnLeft;
+
+        private readonly ILogger _uiLogger;
+        public BattleForm(GameManager existingManager)
+        {
+            if (existingManager == null) throw new ArgumentNullException(nameof(existingManager));
+            _gameManager = existingManager;
+            _uiLogger = existingManager.Logger;      // у GameManager есть свойство Logger
+            BuildUi();
+
+            // Подписываемся на событие сразу — это вызовет ApplyState и сразу отрисует всё
+            _gameManager.GameStateChanged += OnGameStateChanged;
+            _gameManager.GameOver += (s, e) => { /* можно показать окно результата */ };
+
+            // Т.к. мы загружаем состояние, не вызываем StartGame, а сразу показываем текущее
+            _gameManager.OnGameStateChanged();
+        }
 
         public BattleForm(Team redTeam, Team blueTeam)
         {
@@ -50,12 +66,18 @@ namespace QueueFightGame.UI
         private void BuildUi()
         {
             Text = "Поле битвы";
-            ClientSize = new Size(1280, 720);
-            MinimumSize = new Size(960, 540);
+            // Убираем рамки и сразу разворачиваем на весь экран
+            FormBorderStyle = FormBorderStyle.None;
+            WindowState = FormWindowState.Maximized;
+
+            // Можно оставить ClientSize на всякий случай, но при Maximize он не нужен
+            ClientSize = new Size(1920, 1080);
+
             StartPosition = FormStartPosition.CenterScreen;
             AutoScaleMode = AutoScaleMode.Dpi;
             DoubleBuffered = true;
 
+            // Фоновая панель — она дёргает background и растягивается благодаря Dock=Fill
             _battleField = new Panel
             {
                 Dock = DockStyle.Fill,
@@ -65,9 +87,7 @@ namespace QueueFightGame.UI
             };
             Controls.Add(_battleField);
 
-
-         
-
+            // Потоковые панели под команды
             _redPanel = CreateTeamFlow(FlowDirection.LeftToRight);
             _bluePanel = CreateTeamFlow(FlowDirection.RightToLeft);
             _battleField.Controls.Add(_redPanel);
@@ -116,6 +136,17 @@ namespace QueueFightGame.UI
                 Padding = new Padding(0, 10, 0, 10),
                 BackColor = Color.FromArgb(150, 0, 0, 0)
             };
+
+            var saveBtn = MakeButton("💾 Сохранить", (s, ea) =>
+            {
+                using (var dlg = new SaveFileDialog { Filter = "JSON|*.json" })
+                    if (dlg.ShowDialog() == DialogResult.OK)
+                        _gameManager.SaveState(dlg.FileName);
+            });
+            
+            buttonBar.Controls.AddRange(new[] { saveBtn, _nextBtn, _undoBtn, _exitBtn });
+
+
             buttonBar.Controls.AddRange(new Control[] { _nextBtn, _undoBtn, _exitBtn });
             _battleField.Controls.Add(buttonBar);
         }
@@ -203,13 +234,26 @@ namespace QueueFightGame.UI
             panel.Controls.Clear();
             foreach (var unit in team.GetLivingFighters())
             {
-                var cont = new Panel { Width = UnitDisplaySize, Height = UnitDisplaySize + 34, Margin = new Padding(UnitDisplayMargin) };
+                var cont = new Panel { Width = UnitDisplaySize, Height = UnitDisplaySize + 40, Margin = new Padding(UnitDisplayMargin) };
                 var pic = new PictureBox { Width = UnitDisplaySize, Height = UnitDisplaySize, SizeMode = PictureBoxSizeMode.Zoom, BorderStyle = BorderStyle.FixedSingle };
                 pic.Image = SafeImageLoad(unit.IconPath, flip);
+
+                var idTag = new Label
+                {
+                    Text = $"#{unit.ID}",
+                    AutoSize = true,
+                    BackColor = Color.FromArgb(200, Color.Black),
+                    ForeColor = Color.White,
+                    Font = new Font("Segoe UI", 7f, FontStyle.Bold),
+                    Location = new Point(2, 2)
+                };
+                pic.Controls.Add(idTag);   // ➟ нужен pic.Controls вместо cont
+                pic.Controls.SetChildIndex(idTag, 0);
+
                 var lbl = new Label
                 {
                     Dock = DockStyle.Bottom,
-                    Height = 34,
+                    Height = 40,
                     Text = $"{unit.Name}\nHP: {unit.Health:F0}/{unit.MaxHealth:F0}",
                     Font = new Font("Segoe UI", 8f, FontStyle.Bold),
                     TextAlign = ContentAlignment.TopCenter,
@@ -236,4 +280,5 @@ namespace QueueFightGame.UI
             catch { return new Bitmap(UnitDisplaySize, UnitDisplaySize); } // fallback
         }
     }
+
 }

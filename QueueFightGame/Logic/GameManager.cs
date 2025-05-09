@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json;
+using System.IO;
+
+
 
 namespace QueueFightGame
 {
@@ -15,13 +19,112 @@ namespace QueueFightGame
 
         private readonly CommandManager _commandManager;
         public CommandManager CommandManager => _commandManager;
-        private readonly ILogger _logger;
+        public ILogger _logger;
+        public ILogger Logger => _logger;
+
         private readonly Random _random = new Random();
 
         // Events for UI updates
         public event EventHandler<GameStateChangedEventArgs> GameStateChanged;
         public event EventHandler<LogEventArgs> LogGenerated;
         public event EventHandler<GameOverEventArgs> GameOver;
+
+        // DTO для сериализации
+        public class GameStateDto
+        {
+            public int Round { get; set; }
+            public List<UnitDto> RedUnits { get; set; }
+            public List<UnitDto> BlueUnits { get; set; }
+            public List<string> LogHistory { get; set; }
+            // при желании — стеки undo/redo
+        }
+
+        public class UnitDto
+        {
+            public string TypeName { get; set; }
+            public float Health { get; set; }
+            public int Id { get; set; }
+            // и всё, что нужно для восстановления
+        }
+
+        // В GameManager:
+        public void SaveState(string path)
+        {
+            var dto = new GameStateDto
+            {
+                Round = Round,
+                RedUnits = RedTeam.Fighters.Select(u => new UnitDto
+                {
+                    TypeName = u.GetType().Name,
+                    Health = u.Health,
+                    Id = u.ID
+                }).ToList(),
+                BlueUnits = BlueTeam.Fighters.Select(u => new UnitDto
+                {
+                    TypeName = u.GetType().Name,
+                    Health = u.Health,
+                    Id = u.ID
+                }).ToList(),
+                LogHistory = _logger.GetLogHistory()
+            };
+            File.WriteAllText(path, JsonConvert.SerializeObject(dto));
+
+
+        }
+
+        public void LoadState(string path)
+        {
+            var dto = JsonConvert.DeserializeObject<GameStateDto>(File.ReadAllText(path));
+
+            // 1) Создать команды (если их ещё нет) и задать бюджет (его тоже можно дописать в DTO)
+            if (RedTeam == null) RedTeam = new Team("Красные", 0);
+            if (BlueTeam == null) BlueTeam = new Team("Синие", 0);
+
+            // 2) Очистить старые списки бойцов
+            RedTeam.Fighters.Clear();
+            BlueTeam.Fighters.Clear();
+
+            foreach (var u in dto.RedUnits)
+            {
+                var unit = UnitFactory.CreateUnit(u.TypeName);
+                unit.Health = u.Health;
+
+                // добавляем напрямую, не тратя бюджет
+                RedTeam.Fighters.Add(unit);
+                unit.Team = RedTeam;
+            }
+            foreach (var u in dto.BlueUnits)
+            {
+                var unit = UnitFactory.CreateUnit(u.TypeName);
+                unit.Health = u.Health;
+
+                BlueTeam.Fighters.Add(unit);
+                unit.Team = BlueTeam;
+            }
+
+
+            // 4) Восстановить раунд
+            Round = dto.Round;
+
+            CurrentState = GameState.WaitingForPlayer;   // после загрузки ждём действия игрока
+
+            // 5) Восстановить очередь ходов (например, сохранять и загружать CurrentAttacker в DTO)
+            //    Пока просто делаем: тот, кто ходил последним, ходит следующим
+            CurrentAttacker = (dto.Round % 2 == 1) ? RedTeam : BlueTeam;
+            CurrentDefender = CurrentAttacker == RedTeam ? BlueTeam : RedTeam;
+
+            // 6) Восстановить лог
+            _logger.ClearLog();
+            foreach (var line in dto.LogHistory)
+                _logger.Log(line);
+
+            // 7) Очистить историю Undo/Redo
+            _commandManager.ClearHistory();
+
+            // 8) Уведомить UI
+            OnGameStateChanged();
+        }
+
 
 
         public GameManager(ILogger logger)
@@ -209,7 +312,7 @@ namespace QueueFightGame
         }
 
         // --- Event Invokers ---
-        protected virtual void OnGameStateChanged()
+        public virtual void OnGameStateChanged()
         {
             GameStateChanged?.Invoke(this, new GameStateChangedEventArgs(RedTeam, BlueTeam, CurrentState, GetLogHistory()));
         }
@@ -269,4 +372,6 @@ namespace QueueFightGame
         public Team WinningTeam { get; } // null for a draw
         public GameOverEventArgs(Team winner) { WinningTeam = winner; }
     }
+
+
 }
